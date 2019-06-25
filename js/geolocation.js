@@ -1,50 +1,94 @@
+//weather data placeholder;
+// let geoLocData = [];
+// let weatherData;
 
-let weatherArray = []
-let weatherData;
 
-let geoSuccess = (position) => {
+// //geolocation success function
+// let geoSuccess = (position) => {
+//     //make geolocation time stamp human readable
+//     let geoTimeStamp = new Date(position.timestamp).toLocaleString();  
 
-    let geoDataItem = document.querySelectorAll('.geoData');
-    let latPos = position.coords.latitude;
-    let longPos = position.coords.longitude;
-    let timeStamp = new Date(position.timestamp).toLocaleString();
+//     fetch(`https://coreygumbs-eval-test.apigee.net/localweather/${position.coords.latitude},${position.coords.longitude}`)
+//     .then((response) => {
 
-    geoDataItem[0].innerHTML = 'Latitude: ' + latPos;
-    geoDataItem[1].innerHTML = 'Longitude: ' + longPos;
-    geoDataItem[2].innerHTML = 'Time: ' + timeStamp;
+//         console.log('Geolocation Retrieved: ' + geoTimeStamp);
+//         console.log('Response Status: ' + response.status);
 
- 
-    weatherArray.push(latPos, longPos, timeStamp);
+//         return response.json();
+//     })
+//     .then(jsonData => {
+//         return jsonData;
+//     })
+//     .then(data => {
+//         weatherData = data;
+//         console.log(weatherData);
+//         return data;
+//     })
+//     .catch( err => console.error('Error: ' + err));
+// }
 
-    let weatherURL = `https://coreygumbs-eval-test.apigee.net/localweather/${latPos},${longPos}`;
+// //checks for geolocation    
+// let getGeoPosition = () => {
+//     let geoNav =  navigator.geolocation.getCurrentPosition(geoSuccess);
+//     if(navigator.geolocation){
+//        return geoNav
+//     }else{
+//         document.getElementById('errMsg').innerHTML = 'browser doesn\'t support geolocation';
+//     }
+// }
 
-    fetch(weatherURL).then((response) => {
-        // if(response.ok){
-        //     weatherArray.push(response.json()); 
-        //     document.getElementById("weatherData").innerHTML = weatherArray[3];
-        //     console.log(weatherArray[3]);
-           
-        // };  
-        response.json().then( data => {
-         return data;
-        }).then(res => {
-           weatherArray.push(res);
-           weatherData = res;
-           console.log(weatherData)
-           document.getElementById("weatherData").innerHTML = weatherData.currently.apparentTemperature + weatherData.currently.summary;
+// document.getElementById('geoBtn').addEventListener('click', getGeoPosition);
+coordsArray = [];
+
+let geoFindMe = () => {
+
+    let geoSuccess = position => {
+
+        getData(`https://coreygumbs-eval-test.apigee.net/localweather/${position.coords.latitude},${position.coords.longitude}`)
+        .catch(error =>{
+            console.log('Error Code: ' + error.code);
+            console.log('Error Msg: ' + error.message);
+            console.error(error);
         });
 
-    }).catch( err => console.error('Error: ' + err));
-}
+    }
 
-let getGeoPosition = () => {
+    let geoError = error =>{
+        console.log('Error Code: ' + error.code);
+        console.log('Error Msg: ' + error.message);
+    }
+
     if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(geoSuccess);
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
     }else{
         document.getElementById('errMsg').innerHTML = 'browser doesn\'t support geolocation';
     }
+
 }
 
-document.getElementById('geoBtn').addEventListener('click', getGeoPosition);
+let getData = async url => {
+    const response = await fetch(url);
+    const weatherData = await response.json();
 
-console.log(weatherArray);
+    getCoords(weatherData.latitude, weatherData.longitude)
+    .catch(error =>{
+        console.log('Error Code: ' + error.code);
+        console.log('Error Msg: ' + error.message);
+        console.error(error);
+    });
+
+    console.log(weatherData);
+
+    document.getElementById("weatherData").innerHTML = weatherData.currently.summary + '<br />' + `Temperature: ${Math.round(weatherData.currently.temperature)} &deg;`;
+}
+
+let getCoords = async (lat, long) => {
+    const coords = await coordsArray.push(lat, long);
+    myCoords();
+}
+
+let myCoords = () => {
+    console.log(coordsArray);
+}
+
+document.getElementById('geoBtn').addEventListener('click', geoFindMe);
