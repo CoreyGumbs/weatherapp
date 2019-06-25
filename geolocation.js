@@ -1,15 +1,21 @@
+
+
 let getGeoPosition = () => {
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(geoSuccess);
-        
     }else{
-        document.getElementById('message').innerHTML = 'browser doesn\'t support geolocation';
+        document.getElementById('errMsg').innerHTML = 'browser doesn\'t support geolocation';
     }
 }
 
+//You cant store/retrieve Geolocation coordinates, but you can pass them to other functions to be used. 
+let weatherArray = []
+let weatherData;
+
+
 
 let geoSuccess = (position) => {
-    console.log(position);
+
     let geoDataItem = document.querySelectorAll('.geoData');
     let latPos = position.coords.latitude;
     let longPos = position.coords.longitude;
@@ -19,18 +25,30 @@ let geoSuccess = (position) => {
     geoDataItem[1].innerHTML = 'Longitude: ' + longPos;
     geoDataItem[2].innerHTML = 'Time: ' + timeStamp;
 
-    coordsData(latPos, longPos, timeStamp);
-    
+ 
+    weatherArray.push(latPos, longPos, timeStamp);
+
+    let weatherURL = `https://coreygumbs-eval-test.apigee.net/localweather/${latPos},${longPos}`;
+
+    fetch(weatherURL).then((response) => {
+        if(response.ok){
+            weatherArray.push(response); 
+        };  
+    }).catch( err => console.error('Error: ' + err));
+
 }
 
-let coordsData = (lat, long, time) => {
-    return {
-        latitude: lat,
-        longitude: long,
-        time: time
-    }
+let getWeatherData = (lat, long) => {
+
+    let weatherURL = `https://coreygumbs-eval-test.apigee.net/localweather/${lat},${long}`;
+
+    return weatherURL;
 }
 
-console.log(coordsData());
+
 
 document.getElementById('geoBtn').addEventListener('click', getGeoPosition);
+
+
+
+console.log(weatherData);
