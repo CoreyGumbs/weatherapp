@@ -42,3 +42,46 @@ document.getElementById('geoBtn').addEventListener('click', getCurrentGeoPositio
 let geoLocSuccess = () => {
     
 }
+
+
+
+//weather data placeholder;
+// let geoLocData = [];
+// let weatherData;
+
+
+// //geolocation success function
+// let geoSuccess = (position) => {
+//     //make geolocation time stamp human readable
+//     let geoTimeStamp = new Date(position.timestamp).toLocaleString();  
+
+//     fetch(`https://coreygumbs-eval-test.apigee.net/localweather/${position.coords.latitude},${position.coords.longitude}`)
+//     .then((response) => {
+
+//         console.log('Geolocation Retrieved: ' + geoTimeStamp);
+//         console.log('Response Status: ' + response.status);
+
+//         return response.json();
+//     })
+//     .then(jsonData => {
+//         return jsonData;
+//     })
+//     .then(data => {
+//         weatherData = data;
+//         console.log(weatherData);
+//         return data;
+//     })
+//     .catch( err => console.error('Error: ' + err));
+// }
+
+// //checks for geolocation    
+// let getGeoPosition = () => {
+//     let geoNav =  navigator.geolocation.getCurrentPosition(geoSuccess);
+//     if(navigator.geolocation){
+//        return geoNav
+//     }else{
+//         document.getElementById('errMsg').innerHTML = 'browser doesn\'t support geolocation';
+//     }
+// }
+
+// document.getElementById('geoBtn').addEventListener('click', getGeoPosition);
