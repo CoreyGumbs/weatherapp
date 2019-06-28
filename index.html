@@ -10,15 +10,16 @@
 </head>
 <body>
     <div class="container">
-        <button id="geoBtn">Check Current Weather!</button>
+        <button id="geoBtn">Check Current Weather!  </button>
     </div>
-    <div id="message">
-        <h2 id="errMsh"></h2>
-        <p class="geoData"></p>
-        <p class="geoData"></p>
-        <p class="geoData"></p>
-        <p id="weatherData"></p>
+    <div id="current-weather">
+        <div id="current-temp"></div>  
+        <div id="feels-like-temp"></div>
+        <div id="currentTimeStamp">
+            <p id="retrieved-time"></p>   
+        </div>
     </div>
+   
     <script src="js/geolocation.js"></script>
 </body>
 </html>
