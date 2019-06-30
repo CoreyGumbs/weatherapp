@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script defer src="geolocation.js"></script>
+    
     
     <title>Document</title>
 </head>
 <body>
+    <div class="container">
+        <button id="geoBtn">Check Current Weather!  </button>
+    </div>
+    <div id="current-weather">
+        <div id="current-temp"></div>  
+        <div id="feels-like-temp"></div>
+        <div id="currentTimeStamp">
+            <p id="retrieved-time"></p>   
+        </div>
+    </div>
    
+    <script src="js/geolocation.js"></script>
 </body>
 </html>
