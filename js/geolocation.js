@@ -58,6 +58,7 @@ let fetchWeatherData = async url => {
     console.log(weatherData);
     getCurrentTemperatures(weatherData.currently.temperature, weatherData.currently.apparentTemperature);
     getCurrentTimeStamp(weatherData.currently.time);
+    getMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
 
 
 }
@@ -75,7 +76,7 @@ document.getElementById('geoBtn').addEventListener('click', geoFindMe);
 let getCurrentTemperatures = (temperature, feelsLikeTemp) => {
     const currentTemp =  Math.round(temperature);
     const feelsTemp =  Math.round(feelsLikeTemp);
-    document.getElementById("current-temp").innerHTML = `<h1> ${currentTemp}&deg;</h1>`;
+    document.getElementById("current-temp-header").textContent = `${currentTemp}`;
     document.getElementById("feels-like-temp").innerHTML = `<p>Feels Like: <span> ${feelsTemp}&deg;</span></p<`;
 }
 
@@ -85,7 +86,13 @@ let getCurrentTimeStamp = (time) => {
     document.getElementById("retrieved-time").innerHTML= `retrieved: ${currentTime}`;
 }
 
-let getCurrentHumidity = '';
+let getMoistureConditions = (dewpoint, humidity) => {
+    const currentDewPt = Math.round(dewpoint);
+    const currentHumidity = Math.round(humidity *100);
+    document.getElementById("current-humidity").innerHTML= `Humidity: ${currentHumidity}%`;
+    document.getElementById("current-dewpoint").innerHTML= `Dew Pt: ${currentDewPt}%`;
+}
+
 /* TODO List
 
 --Create a lib for each weather category that returns the html. (IE: current weather, current weather image, hourly forecast etc.)

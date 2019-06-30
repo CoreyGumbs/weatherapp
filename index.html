@@ -4,22 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+    <link rel="stylesheet" href="css/styles.css">
     
     <title>Document</title>
 </head>
 <body>
+<main>
+    <header>
+        <nav>
+            
+        </nav>
+    </header>
     <div class="container">
         <button id="geoBtn">Check Current Weather!  </button>
     </div>
     <div id="current-weather">
-        <div id="current-temp"></div>  
+        <div id="current-temp">
+           <h1> <span id="current-temp-header"></span>&deg;</h1>
+        </div>  
         <div id="feels-like-temp"></div>
+        <div id="current-moisture">
+            <p id="current-humidity"></p>
+            <p id="current-dewpoint"></p>
+        </div>
         <div id="currentTimeStamp">
             <p id="retrieved-time"></p>   
         </div>
     </div>
-   
+</main>
     <script src="js/geolocation.js"></script>
 </body>
 </html>
