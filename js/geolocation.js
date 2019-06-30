@@ -58,7 +58,7 @@ let fetchWeatherData = async url => {
     console.log(weatherData);
     getCurrentTemperatures(weatherData.currently.temperature, weatherData.currently.apparentTemperature);
     getCurrentTimeStamp(weatherData.currently.time);
-    getMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
+    getCurrentMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
 
 
 }
@@ -86,7 +86,7 @@ let getCurrentTimeStamp = (time) => {
     document.getElementById("retrieved-time").innerHTML= `retrieved: ${currentTime}`;
 }
 
-let getMoistureConditions = (dewpoint, humidity) => {
+let getCurrentMoistureConditions = (dewpoint, humidity) => {
     const currentDewPt = Math.round(dewpoint);
     const currentHumidity = Math.round(humidity *100);
     document.getElementById("current-humidity").innerHTML= `Humidity: ${currentHumidity}%`;
