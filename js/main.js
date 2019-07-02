@@ -59,7 +59,7 @@ let fetchWeatherData = async url => {
     getCurrentTemperatures(weatherData.currently.temperature, weatherData.currently.apparentTemperature);
     getCurrentTimeStamp(weatherData.currently.time);
     getCurrentMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
-    getWeatherIcons(weatherData.currently.icon);
+    getCurrentWeatherIcons(weatherData.currently.icon);
 
 
 }
@@ -91,7 +91,7 @@ let getCurrentMoistureConditions = (dewPoint, humidity) => {
     document.getElementById("current-dewpoint").innerHTML= `Dew Pt: ${currentDewPt}%`;
 }
 
-let getWeatherIcons =  (icon) => { 
+let getCurrentWeatherIcons =  (icon) => { 
     const iconType = icon;
 
     const iconCanvas = document.createElement('canvas');
@@ -108,42 +108,72 @@ let getWeatherIcons =  (icon) => {
             "sun": "#F2D377",
             "cloud": "#1B72BF"
         }
-    });
-    
-    console.log(skyIcon, icon); 
+    }); 
 
     switch(iconType){
+
         case 'clear-day':
             skyIcon.set(iconType, Skycons.CLEAR_DAY);
             skyIcon.play();
             console.log("current icon: " + iconType);
             break;
+
         case 'clear-night':
             skyIcon.set(iconType, Skycons.CLEAR_NIGHT);
             skyIcon.play();
             console.log("current icon: " + iconType);
             break;
+
         case 'partly-cloudy-day':
             skyIcon.set(iconType, Skycons.PARTLY_CLOUDY_DAY);
             skyIcon.play();
             console.log("current icon: " + iconType);
             break;
+
         case 'partly-cloudy-night':
             skyIcon.set(iconType, Skycons.PARTLY_CLOUDY_NIGHT);
             skyIcon.play();
             console.log("current icon: " + iconType);
             break;
+
         case 'cloudy':
             skyIcon.set(iconType, Skycons.CLOUDY);
             skyIcon.play();
             console.log("current icon: " + iconType);
             break;
+
         case 'rain':
             skyIcon.set(iconType, Skycons.RAIN);
             skyIcon.play();
             console.log("current icon: " + iconType);
             break;
-    }   case '';
+
+        case 'sleet':
+            skyIcon.set(iconType, Skycons.SLEET);
+            skyIcon.play();
+            console.log("current icon: " + iconType);
+            break;
+
+        case 'snow':
+            skyIcon.set(iconType, Skycons.SNOW);
+            skyIcon.play();
+            console.log("current icon: " + iconType);
+            break;
+
+        case 'wind':
+            skyIcon.set(iconType, Skycons.WIND);
+            skyIcon.play();
+            console.log("current icon: " + iconType);
+            break;
+        
+        case 'fog':
+            skyIcon.set(iconType, Skycons.FOG);
+            skyIcon.play();
+            console.log("current icon: " + iconType);
+            break;
+    }   
+    
+
 }
 
 //Event Listener for when user clicks check weather button.
