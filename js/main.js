@@ -1,6 +1,6 @@
-    // window.addEventListener('load', () =>{
-    //     geoFindMe();
-    // });
+    window.addEventListener('load', () =>{
+        geoFindMe();
+    });
 //current coordinates variable placeholder.
 coordsArray = [];
 
@@ -55,7 +55,7 @@ let fetchWeatherData = async url => {
         errorMsg(error);
     });
 
-    console.log(weatherData);
+    console.log(weatherData.daily.data[0]);
     getCurrentTemperatures(weatherData.currently.temperature, weatherData.currently.apparentTemperature);
     getCurrentTimeStamp(weatherData.currently.time);
     getCurrentMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
