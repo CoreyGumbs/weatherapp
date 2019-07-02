@@ -1,6 +1,6 @@
-    window.addEventListener('load', () =>{
-        geoFindMe();
-    });
+    // window.addEventListener('load', () =>{
+    //     geoFindMe();
+    // });
 //current coordinates variable placeholder.
 coordsArray = [];
 
@@ -12,7 +12,6 @@ let errorMsg = (error) => {
 
 //Finds the geolocation of user.
 let geoFindMe = () => {
-
     //success callback for navigator.geolocation.getCurrentPosition() parameter.
     let geoSuccess = position => {
 
@@ -30,8 +29,7 @@ let geoFindMe = () => {
         navigator.geolocation.getCurrentPosition(geoSuccess, errorMsg);
     }else{
         document.getElementById('errMsg').innerHTML = 'browser doesn\'t support geolocation';
-    }
-
+    }   
 }
 
 //takes url from the success callback in geoFindMe()
@@ -42,7 +40,6 @@ let fetchWeatherData = async url => {
     .catch(error =>{
         errorMsg(error);
     });
-
     //converts response body to json.
     const weatherData = await response.json()
     .catch(error =>{
@@ -60,7 +57,7 @@ let fetchWeatherData = async url => {
     getCurrentTimeStamp(weatherData.currently.time);
     getCurrentMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
     getCurrentWeatherIcons(weatherData.currently.icon);
-
+    getCurrentUVIndex(8);
 
 }
 
@@ -74,21 +71,45 @@ let getGeoCoords = async (lat, long) => {
 let getCurrentTemperatures = (temperature, feelsLikeTemp) => {
     const currentTemp =  Math.round(temperature);
     const feelsTemp =  Math.round(feelsLikeTemp);
-    document.getElementById("current-temp-header").textContent = `${currentTemp}`;
-    document.getElementById("feels-like-temp").innerHTML = `<p>Feels Like: <span> ${feelsTemp}&deg;</span></p<`;
+    document.getElementById("current-temp-header").innerHTML = `${currentTemp}&deg;`;
+    document.getElementById("feels-like-temp").innerHTML = `<p>Feels Like: <span> ${feelsTemp}&deg;</span></p>`;
 }
 
 let getCurrentTimeStamp = (time) => {
     const unixtimestamp = time;
     const currentTime = new Date(unixtimestamp * 1000);
-    document.getElementById("retrieved-time").innerHTML= `retrieved: ${currentTime}`;
+    document.getElementById("retrieved-time").textContent = `retrieved: ${currentTime}`;
 }
 
 let getCurrentMoistureConditions = (dewPoint, humidity) => {
     const currentDewPt = Math.round(dewPoint);
     const currentHumidity = Math.round(humidity * 100);
-    document.getElementById("current-humidity").innerHTML= `Humidity: ${currentHumidity}%`;
-    document.getElementById("current-dewpoint").innerHTML= `Dew Pt: ${currentDewPt}%`;
+    document.getElementById("current-humidity").textContent= `Humidity: ${currentHumidity}%`;
+    document.getElementById("current-dewpoint").textContent= `Dew Pt: ${currentDewPt}%`;
+}
+
+let getCurrentUVIndex = (uv) => {
+    let uvIndex = document.getElementById("current-uvIndex");
+
+    uvIndex.textContent = uv;
+
+    switch(true){
+        case (uv < 3):
+            uvIndex.style.backgroundColor = "green";
+            console.log('uv index: ' + uv);
+            break
+
+        case ((uv >= 3) && (uv <= 5)):
+            uvIndex.style.backgroundColor = "yellow";
+            console.log('uv index: ' + uv);
+            break;
+        
+        case ((uv > 5) && (uv <= 7)):
+            uvIndex.style.backgroundColor = "orange";
+            console.log('uv index: ' + uv);
+            break;
+
+    }
 }
 
 let getCurrentWeatherIcons =  (icon) => { 
@@ -103,8 +124,9 @@ let getCurrentWeatherIcons =  (icon) => {
     iconLocation.appendChild(iconCanvas);
 
     const skyIcon = new Skycons({
+        "monochrome": false,
         "colors": {
-            "main": "#F2D377",
+            "main": "#000",
             "sun": "#F2D377",
             "cloud": "#1B72BF"
         }
@@ -172,8 +194,6 @@ let getCurrentWeatherIcons =  (icon) => {
             console.log("current icon: " + iconType);
             break;
     }   
-    
-
 }
 
 //Event Listener for when user clicks check weather button.
