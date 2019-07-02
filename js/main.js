@@ -57,7 +57,7 @@ let fetchWeatherData = async url => {
     getCurrentTimeStamp(weatherData.currently.time);
     getCurrentMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
     getCurrentWeatherIcons(weatherData.currently.icon);
-    getCurrentUVIndex(13);
+    getCurrentUVIndex(weatherData.currently.uvIndex);
 
 }
 
