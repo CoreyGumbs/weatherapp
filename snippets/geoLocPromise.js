@@ -85,3 +85,22 @@ let geoLocSuccess = () => {
 // }
 
 // document.getElementById('geoBtn').addEventListener('click', getGeoPosition);
+
+
+
+
+/* TODO List
+
+--Create a lib for each weather category that returns the html. (IE: current weather, current weather image, hourly forecast etc.)
+Make them components?
+
+--Try to make it as dynamic as possible. 
+
+--Design layout
+
+--add current location to map
+
+--create database to save all generated data in
+
+
+*/
