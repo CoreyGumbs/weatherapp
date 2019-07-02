@@ -57,7 +57,7 @@ let fetchWeatherData = async url => {
     getCurrentTimeStamp(weatherData.currently.time);
     getCurrentMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
     getCurrentWeatherIcons(weatherData.currently.icon);
-    getCurrentUVIndex(8);
+    getCurrentUVIndex(13);
 
 }
 
@@ -108,7 +108,16 @@ let getCurrentUVIndex = (uv) => {
             uvIndex.style.backgroundColor = "orange";
             console.log('uv index: ' + uv);
             break;
-
+        
+        case ((uv > 7) && (uv <= 10)):
+            uvIndex.style.backgroundColor = "red";
+            console.log('uv index: ' + uv);
+            break;
+        
+        case (uv >= 11):
+            uvIndex.style.backgroundColor = "purple";
+            console.log('uv index: ' + uv);
+            break;
     }
 }
 
