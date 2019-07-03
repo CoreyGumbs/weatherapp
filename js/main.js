@@ -152,7 +152,7 @@ let getCurrentOzoneIndex = (ozLvl) =>{
 
         case ((ozLvl > 200) && (ozLvl <= 300)):
             ozoneIndex.style.color = "white";
-            ozoneIndex.style.backgroundColor = "darkmagenta";
+            ozoneIndex.style.backgroundColor = "#99004B";
             console.log("Ozone Level: " + ozLvl);
             break;
     
