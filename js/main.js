@@ -59,6 +59,7 @@ let fetchWeatherData = async url => {
     getCurrentWeatherIcons(weatherData.currently.icon);
     getCurrentUVIndex(weatherData.currently.uvIndex);
     getCurrentOzoneIndex(weatherData.currently.ozone);
+    getCurrentVisibility(weatherData.currently.cloudCover, weatherData.currently.visibility);
 
 }
 
@@ -161,7 +162,16 @@ let getCurrentOzoneIndex = (ozLvl) =>{
             ozoneIndex.style.backgroundColor = "maroon";
             console.log("Ozone Level: " + ozLvl);
             break;
+    }
 }
+
+let getCurrentVisibility = (cloudCover, visibility) => {
+    const currentVisability = Math.round(visibility);
+    const currentCloudCover = (cloudCover * 100);
+    document.getElementById('current-visibility').textContent = currentVisability;
+    document.getElementById('current-cloud-cover').textContent = `${currentCloudCover}%`;
+
+    console.log("Curent Cloud Cover & Visibility:" + currentCloudCover +"%", currentVisability + " miles");
 }
 
 let getCurrentWeatherIcons =  (icon) => { 
