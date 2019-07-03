@@ -58,6 +58,7 @@ let fetchWeatherData = async url => {
     getCurrentMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
     getCurrentWeatherIcons(weatherData.currently.icon);
     getCurrentUVIndex(weatherData.currently.uvIndex);
+    getCurrentOzoneIndex(151);//weatherData.currently.ozone
 
 }
 
@@ -88,37 +89,73 @@ let getCurrentMoistureConditions = (dewPoint, humidity) => {
     document.getElementById("current-dewpoint").textContent= `Dew Pt: ${currentDewPt}%`;
 }
 
-let getCurrentUVIndex = (uv) => {
+let getCurrentUVIndex = (uvLvl) => {
     let uvIndex = document.getElementById("current-uvIndex");
 
-    uvIndex.textContent = uv;
+    uvIndex.textContent = `UV Index: ${uvLvl} nm`;
 
     switch(true){
-        case (uv < 3):
+        case (uvLvl < 3):
             uvIndex.style.backgroundColor = "green";
-            console.log('uv index: ' + uv);
+            console.log('UV Index: ' + uvLvl);
             break
 
-        case ((uv >= 3) && (uv <= 5)):
+        case ((uvLvl >= 3) && (uvLvl <= 5)):
             uvIndex.style.backgroundColor = "yellow";
-            console.log('uv index: ' + uv);
+            console.log('UV Index: ' + uvLvl);
             break;
         
-        case ((uv > 5) && (uv <= 7)):
+        case ((uvLvl > 5) && (uvLvl <= 7)):
             uvIndex.style.backgroundColor = "orange";
-            console.log('uv index: ' + uv);
+            console.log('UV Index: ' + uvLvl);
             break;
         
-        case ((uv > 7) && (uv <= 10)):
+        case ((uvLvl > 7) && (uvLvl <= 10)):
             uvIndex.style.backgroundColor = "red";
-            console.log('uv index: ' + uv);
+            console.log('UV Index: ' + uvLvl);
             break;
         
-        case (uv >= 11):
+        case (uvLvl >= 11):
+            uvIndex.style.color = "white";
             uvIndex.style.backgroundColor = "purple";
-            console.log('uv index: ' + uv);
+            console.log('UV Index: ' + uvLvl);
             break;
     }
+}
+
+let getCurrentOzoneIndex = (ozLvl) =>{
+    let ozoneIndex = document.getElementById("current-ozone-index");
+
+    ozoneIndex.textContent = `Ozone Level: ${ozLvl} DU`;
+    
+    switch(true){
+        case (ozLvl <= 50):
+            ozoneIndex.style.backgroundColor = "green";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+
+        case ((ozLvl > 50) && (ozLvl <= 100)):
+            ozoneIndex.style.backgroundColor = "yellow";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+
+        case ((ozLvl > 100) && (ozLvl <= 150)):
+            ozoneIndex.style.backgroundColor = "orange";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+        
+        case ((ozLvl > 150) && (ozLvl <= 200)):
+            ozoneIndex.style.color = "white";
+            ozoneIndex.style.backgroundColor = "red";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+
+        case ((ozLvl > 200) && (ozLvl <= 300)):
+            ozoneIndex.style.color = "white";
+            ozoneIndex.style.backgroundColor = "purple";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+}
 }
 
 let getCurrentWeatherIcons =  (icon) => { 
