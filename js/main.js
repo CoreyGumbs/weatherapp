@@ -58,7 +58,7 @@ let fetchWeatherData = async url => {
     getCurrentMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
     getCurrentWeatherIcons(weatherData.currently.icon);
     getCurrentUVIndex(weatherData.currently.uvIndex);
-    getCurrentOzoneIndex(151);//weatherData.currently.ozone
+    getCurrentOzoneIndex(weatherData.currently.ozone);
 
 }
 
@@ -152,7 +152,13 @@ let getCurrentOzoneIndex = (ozLvl) =>{
 
         case ((ozLvl > 200) && (ozLvl <= 300)):
             ozoneIndex.style.color = "white";
-            ozoneIndex.style.backgroundColor = "purple";
+            ozoneIndex.style.backgroundColor = "darkmagenta";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+    
+        case ((ozLvl > 300) && (ozLvl <= 500)):
+            ozoneIndex.style.color = "white";
+            ozoneIndex.style.backgroundColor = "maroon";
             console.log("Ozone Level: " + ozLvl);
             break;
 }
