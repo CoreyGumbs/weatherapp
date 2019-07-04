@@ -167,11 +167,32 @@ let getCurrentOzoneIndex = (ozLvl) =>{
 
 let getCurrentVisibility = (cloudCover, visibility) => {
     const currentVisability = Math.round(visibility);
-    const currentCloudCover = (cloudCover * 100);
+    const currentCloudCover = Math.round(cloudCover * 100);
     document.getElementById('current-visibility').textContent = currentVisability;
     document.getElementById('current-cloud-cover').textContent = `${currentCloudCover}%`;
 
-    console.log("Curent Cloud Cover & Visibility:" + currentCloudCover +"%", currentVisability + " miles");
+    console.log("Curent Cloud Cover & Visibility: " + currentCloudCover + "%", currentVisability + " miles");
+}
+
+let getCurrentWindConditions = (bearing, gusts, speed) =>{
+    let windBearing = bearing;
+    let windSpeed =  speed;
+    let windGusts = gusts;
+    console.table("");
+
+    switch(true){
+        case (windBearing >= 348.75 && windBearing <= 11.25):
+            console.log(windBearing + "degrees -=- N" );
+            break;
+
+        case(windBearing >=11.26 && windBearing <= 33.75):
+            console.log(windBearing + "degrees -=- NNE" );
+            break;
+
+        case(windBearing >=33.76 && windBearing <= 56.25):
+            console.log(windBearing + "degrees -=- NE" );
+            break;
+    }
 }
 
 let getCurrentWeatherIcons =  (icon) => { 
