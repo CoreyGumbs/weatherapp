@@ -189,20 +189,69 @@ let getCurrentWindConditions = (bearing, speed, gusts) =>{
     console.log(windBearing, windSpeed, windGusts);
 
     switch(true){
-        case (windBearing >= 348.75 && windBearing <= 11.25):
+        case (windBearing >= 348.75 || windBearing < 11.25):
             console.log(windBearing + "degrees -=- N" );
             break;
 
-        case(windBearing >=11.26 && windBearing <= 33.75):
+        case(windBearing >= 11.25 && windBearing < 33.75):
             console.log(windBearing + "degrees -=- NNE" );
             break;
 
-        case(windBearing >=33.76 && windBearing <= 56.25):
+        case(windBearing >= 33.75 && windBearing < 56.25):
             console.log(windBearing + "degrees -=- NE" );
             break;
         
-        case(windBearing >=33.76 && windBearing <= 56.25):
-            console.log(windBearing + "degrees -=- NE" );
+        case(windBearing >= 52.25 && windBearing < 78.25):
+            console.log(windBearing + "degrees -=- ENE" );
+            break;
+
+        
+        case(windBearing >= 78.25 && windBearing < 101.25):
+            console.log(windBearing + "degrees -=- E" );
+            break;
+        
+        case(windBearing >= 101.25 && windBearing < 123.75):
+            console.log(windBearing + "degrees -=- ESE" );
+            break;
+        
+        case(windBearing >= 123.75 && windBearing < 146.25):
+            console.log(windBearing + "degrees -=- SE" );
+            break;
+        
+        case(windBearing >=146.25 && windBearing < 168.75):
+            console.log(windBearing + "degrees -=- SSE" );
+            break;
+        
+        case(windBearing >= 168.75 && windBearing < 191.25):
+            console.log(windBearing + "degrees -=- S" );
+            break;
+        
+        case(windBearing >= 191.25 && windBearing < 213.75):
+            console.log(windBearing + "degrees -=- SSW" );
+            break;
+        
+        case(windBearing >= 213.75 && windBearing < 236.25):
+            console.log(windBearing + "degrees -=- SW" );
+            break;
+
+        case(windBearing >= 236.25 && windBearing < 258.75):
+            console.log(windBearing + "degrees -=- WSW" );
+            break;
+        
+        case(windBearing >= 258.75 && windBearing < 281.25):
+            console.log(windBearing + "degrees -=- W" );
+            break;
+        
+        case(windBearing >= 281.25 && windBearing < 303.75):
+            console.log(windBearing + "degrees -=- WNW" );
+            break;
+        
+        case(windBearing >= 303.75 && windBearing < 326.25):
+            console.log(windBearing + "degrees -=- NW" );
+            break;
+        
+        case(windBearing >= 326.25 && windBearing < 348.75):
+            console.log(windBearing + "degrees -=- NNW" );
             break;
     }
 }
