@@ -60,6 +60,7 @@ let fetchWeatherData = async url => {
     getCurrentUVIndex(weatherData.currently.uvIndex);
     getCurrentOzoneIndex(weatherData.currently.ozone);
     getCurrentVisibility(weatherData.currently.cloudCover, weatherData.currently.visibility);
+    getCurrentWindConditions(weatherData.currently.windBearing, weatherData.currently.windSpeed, weatherData.currently.windGust);
 
 }
 
@@ -79,7 +80,14 @@ let getCurrentTemperatures = (temperature, feelsLikeTemp) => {
 
 let getCurrentTimeStamp = (time) => {
     const unixtimestamp = time;
-    const currentTime = new Date(unixtimestamp * 1000);
+    const options =  {
+        hour12: "true",
+        weekday: "long",
+        year: "numeric", 
+        month: "long",
+        day: "numeric"
+    }
+    const currentTime = new Date(unixtimestamp * 1000).toLocaleTimeString(undefined, options);
     document.getElementById("retrieved-time").textContent = `retrieved: ${currentTime}`;
 }
 
@@ -168,17 +176,17 @@ let getCurrentOzoneIndex = (ozLvl) =>{
 let getCurrentVisibility = (cloudCover, visibility) => {
     const currentVisability = Math.round(visibility);
     const currentCloudCover = Math.round(cloudCover * 100);
-    document.getElementById('current-visibility').textContent = currentVisability;
+    document.getElementById('current-visibility').textContent = `${currentVisability} miles`;
     document.getElementById('current-cloud-cover').textContent = `${currentCloudCover}%`;
 
-    console.log("Curent Cloud Cover & Visibility: " + currentCloudCover + "%", currentVisability + " miles");
+    console.log("Curent Cloud Cover & Visibility: ", `${currentCloudCover}%`, `${currentVisability}miles`);
 }
 
-let getCurrentWindConditions = (bearing, gusts, speed) =>{
+let getCurrentWindConditions = (bearing, speed, gusts) =>{
     let windBearing = bearing;
-    let windSpeed =  speed;
-    let windGusts = gusts;
-    console.table("");
+    let windSpeed =  Math.round(speed);
+    let windGusts = Math.round(gusts);
+    console.log(windBearing, windSpeed, windGusts);
 
     switch(true){
         case (windBearing >= 348.75 && windBearing <= 11.25):
@@ -189,6 +197,10 @@ let getCurrentWindConditions = (bearing, gusts, speed) =>{
             console.log(windBearing + "degrees -=- NNE" );
             break;
 
+        case(windBearing >=33.76 && windBearing <= 56.25):
+            console.log(windBearing + "degrees -=- NE" );
+            break;
+        
         case(windBearing >=33.76 && windBearing <= 56.25):
             console.log(windBearing + "degrees -=- NE" );
             break;
