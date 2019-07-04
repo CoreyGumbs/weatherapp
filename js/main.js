@@ -60,7 +60,7 @@ let fetchWeatherData = async url => {
     getCurrentUVIndex(weatherData.currently.uvIndex);
     getCurrentOzoneIndex(weatherData.currently.ozone);
     getCurrentVisibility(weatherData.currently.cloudCover, weatherData.currently.visibility);
-    getCurrentWindConditions(weatherData.currently.windBearing, weatherData.currently.windSpeed, weatherData.currently.windGust);
+    getCurrentWindConditions(90, weatherData.currently.windSpeed, weatherData.currently.windGust);//weatherData.currently.windBearing
 
 }
 
@@ -176,8 +176,8 @@ let getCurrentOzoneIndex = (ozLvl) =>{
 let getCurrentVisibility = (cloudCover, visibility) => {
     const currentVisability = Math.round(visibility);
     const currentCloudCover = Math.round(cloudCover * 100);
-    document.getElementById('current-visibility').textContent = `${currentVisability} miles`;
-    document.getElementById('current-cloud-cover').textContent = `${currentCloudCover}%`;
+    document.getElementById('current-visibility').textContent = `Visibility: ${currentVisability} miles`;
+    document.getElementById('current-cloud-cover').textContent = `Cloud Cover: ${currentCloudCover}%`;
 
     console.log("Curent Cloud Cover & Visibility: ", `${currentCloudCover}%`, `${currentVisability}miles`);
 }
@@ -186,7 +186,19 @@ let getCurrentWindConditions = (bearing, speed, gusts) =>{
     let windBearing = bearing;
     let windSpeed =  Math.round(speed);
     let windGusts = Math.round(gusts);
+    let windBearingDiv = document.getElementById("current-wind-bearing");
+    let windBearingImg = document.createElement('img');
+    windBearingImg.src = "./imgs/wind-direction.png";
+    windBearingImg.id = "wind-bearing-img";
+    windBearingDiv.appendChild(windBearingImg);
+
+
+    
+
     console.log(windBearing, windSpeed, windGusts);
+
+    document.getElementById("current-wind-speed").textContent = `Wind Speed: ${windSpeed}mph`;
+    document.getElementById("current-wind-gust").textContent = `Wind Gusts: ${windGusts}mph`;
 
     switch(true){
         case (windBearing >= 348.75 || windBearing < 11.25):
@@ -194,19 +206,22 @@ let getCurrentWindConditions = (bearing, speed, gusts) =>{
             break;
 
         case(windBearing >= 11.25 && windBearing < 33.75):
+            document.getElementById("wind-bearing-img").className = "northNorthEast";
             console.log(windBearing + "degrees -=- NNE" );
             break;
 
         case(windBearing >= 33.75 && windBearing < 56.25):
+            document.getElementById("wind-bearing-img").className = "northEast";
             console.log(windBearing + "degrees -=- NE" );
             break;
         
         case(windBearing >= 52.25 && windBearing < 78.25):
+            document.getElementById("wind-bearing-img").className = "eastNorthEast";
             console.log(windBearing + "degrees -=- ENE" );
             break;
-
         
         case(windBearing >= 78.25 && windBearing < 101.25):
+            document.getElementById("wind-bearing-img").className = "east";
             console.log(windBearing + "degrees -=- E" );
             break;
         

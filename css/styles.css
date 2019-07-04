@@ -26,3 +26,41 @@
 .show{
     visibility: visible;
 }
+
+
+#wind-bearing-img{
+    width: 20px;
+    height: 20px;
+}
+
+.northNorthEast{
+    transform: rotate(22.5deg);
+}
+
+.northEast{
+    transform: rotate(45deg);
+}
+
+.eastNorthEast{
+    transform: rotate(67.5deg);
+}
+
+.east{
+    transform: rotate(90deg);
+}
+
+.eastSouthEast{
+    transform: rotate(112.5deg);
+}
+
+.southEast{
+    transform: rotate(135deg);
+}
+
+.southSouthEast{
+    transform: rotate(168.75deg);
+}
+
+.south{
+    transform: rotate(191.25deg);
+}
