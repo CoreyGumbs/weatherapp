@@ -60,7 +60,7 @@ let fetchWeatherData = async url => {
     getCurrentUVIndex(weatherData.currently.uvIndex);
     getCurrentOzoneIndex(weatherData.currently.ozone);
     getCurrentVisibility(weatherData.currently.cloudCover, weatherData.currently.visibility);
-    getCurrentWindConditions(90, weatherData.currently.windSpeed, weatherData.currently.windGust);//weatherData.currently.windBearing
+    getCurrentWindConditions(weatherData.currently.windBearing, weatherData.currently.windSpeed, weatherData.currently.windGust);//weatherData.currently.windBearing
 
 }
 
@@ -202,71 +202,82 @@ let getCurrentWindConditions = (bearing, speed, gusts) =>{
 
     switch(true){
         case (windBearing >= 348.75 || windBearing < 11.25):
-            console.log(windBearing + "degrees -=- N" );
+            console.log(windBearing + "° -=- N" );
             break;
 
         case(windBearing >= 11.25 && windBearing < 33.75):
             document.getElementById("wind-bearing-img").className = "northNorthEast";
-            console.log(windBearing + "degrees -=- NNE" );
+            console.log(windBearing + "° -=- NNE" );
             break;
 
         case(windBearing >= 33.75 && windBearing < 56.25):
             document.getElementById("wind-bearing-img").className = "northEast";
-            console.log(windBearing + "degrees -=- NE" );
+            console.log(windBearing + "° -=- NE" );
             break;
         
         case(windBearing >= 52.25 && windBearing < 78.25):
             document.getElementById("wind-bearing-img").className = "eastNorthEast";
-            console.log(windBearing + "degrees -=- ENE" );
+            console.log(windBearing + "° -=- ENE" );
             break;
         
         case(windBearing >= 78.25 && windBearing < 101.25):
             document.getElementById("wind-bearing-img").className = "east";
-            console.log(windBearing + "degrees -=- E" );
+            console.log(windBearing + "° -=- E" );
             break;
         
         case(windBearing >= 101.25 && windBearing < 123.75):
-            console.log(windBearing + "degrees -=- ESE" );
+            document.getElementById("wind-bearing-img").className = "eastSouthEast";
+            console.log(windBearing + "° -=- ESE" );
             break;
         
         case(windBearing >= 123.75 && windBearing < 146.25):
-            console.log(windBearing + "degrees -=- SE" );
+            document.getElementById("wind-bearing-img").className = "southEast";
+            console.log(windBearing + "° -=- SE" );
             break;
         
         case(windBearing >=146.25 && windBearing < 168.75):
-            console.log(windBearing + "degrees -=- SSE" );
+            document.getElementById("wind-bearing-img").className = "southSouthEast";
+            console.log(windBearing + "° -=- SSE" );
             break;
         
         case(windBearing >= 168.75 && windBearing < 191.25):
-            console.log(windBearing + "degrees -=- S" );
+            document.getElementById("wind-bearing-img").className = "south";
+            console.log(windBearing + "° -=- S" );
             break;
         
         case(windBearing >= 191.25 && windBearing < 213.75):
-            console.log(windBearing + "degrees -=- SSW" );
+            document.getElementById("wind-bearing-img").className = "southSouthWest";
+            console.log(windBearing + "° -=- SSW" );
             break;
         
         case(windBearing >= 213.75 && windBearing < 236.25):
-            console.log(windBearing + "degrees -=- SW" );
+            document.getElementById("wind-bearing-img").className = "southWest";
+            console.log(windBearing + "° -=- SW" );
             break;
 
         case(windBearing >= 236.25 && windBearing < 258.75):
-            console.log(windBearing + "degrees -=- WSW" );
+            document.getElementById("wind-bearing-img").className = "westSouthWest";
+            console.log(windBearing + "° -=- WSW" );
             break;
         
         case(windBearing >= 258.75 && windBearing < 281.25):
-            console.log(windBearing + "degrees -=- W" );
+            document.getElementById("wind-bearing-img").className = "west";
+            console.log(windBearing + "° -=- W" );
             break;
         
         case(windBearing >= 281.25 && windBearing < 303.75):
-            console.log(windBearing + "degrees -=- WNW" );
+            document.getElementById("wind-bearing-img").className = "westNorthWest";
+            console.log(windBearing + "° -=- WNW" );
             break;
         
         case(windBearing >= 303.75 && windBearing < 326.25):
-            console.log(windBearing + "degrees -=- NW" );
+            document.getElementById("wind-bearing-img").className = "northWest";
+            console.log(windBearing + "° -=- NW" );
             break;
         
         case(windBearing >= 326.25 && windBearing < 348.75):
-            console.log(windBearing + "degrees -=- NNW" );
+            document.getElementById("wind-bearing-img").className = "northNorthWest";
+            console.log(windBearing + "° -=- NNW" );
             break;
     }
 }

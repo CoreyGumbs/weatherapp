@@ -29,8 +29,8 @@
 
 
 #wind-bearing-img{
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
 }
 
 .northNorthEast{
@@ -58,9 +58,37 @@
 }
 
 .southSouthEast{
-    transform: rotate(168.75deg);
+    transform: rotate(157.5deg);
 }
 
 .south{
-    transform: rotate(191.25deg);
+    transform: rotate(180deg);
 }
+
+.southSouthWest{
+    transform: rotate(202.5deg);
+}  
+
+.southWest{
+    transform: rotate(225deg);
+} 
+
+.westSouthWest{
+    transform: rotate(247.5deg);
+} 
+
+.west{
+    transform: rotate(270deg);
+} 
+
+.westNorthWest{
+    transform: rotate(292.5deg);
+} 
+
+.northWest{
+    transform: rotate(315deg);
+} 
+
+.northNorthWest{
+    transform: rotate(337.5deg);  
+} 
