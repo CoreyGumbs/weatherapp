@@ -53,6 +53,7 @@ let fetchWeatherData = async url => {
     });
 
     console.log(weatherData);
+    //Data from "Currently" data point of DarkSky response object.
     getCurrentTemperatures(weatherData.currently.temperature, weatherData.currently.apparentTemperature);
     getCurrentTimeStamp(weatherData.currently.time);
     getCurrentMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
@@ -62,6 +63,10 @@ let fetchWeatherData = async url => {
     getCurrentVisibility(weatherData.currently.cloudCover, weatherData.currently.visibility);
     getCurrentWindConditions(weatherData.currently.windBearing, weatherData.currently.windSpeed, weatherData.currently.windGust);//weatherData.currently.windBearing
     getCurrentPrecipitation(weatherData.currently.precipProbability, weatherData.currently.preciptType, weatherData.currently.precipIntensity);
+    getCurrentStormBearing(weatherData.currently.nearestStormBearing, weatherData.currently.nearestStormDistance);
+
+    //Data from "Hourly" data point of DarkSky response object.
+
 }
 
 //Function to push recieved latitude & longitude coordinates from API call to placeholder array.
@@ -294,6 +299,125 @@ let getCurrentPrecipitation = (probability, precipType=null, precipIntensity) =>
 
 }
 
+let getCurrentStormBearing = (nearestStormBearing, nearestStormDistance) => {
+    let stormBearing = nearestStormBearing;
+    let stormDistance = nearestStormDistance;
+
+    if (stormBearing !== undefined && stormDistance !== undefined){
+        
+        let stormBearingImg = document.createElement('img');
+        let cardinalDirection = document.createElement('p');
+
+        stormBearingImg.src = './imgs/wind-direction.png';
+        stormBearingImg.id = 'storm-bearing-img';
+        document.getElementById('current-storm-bearing').appendChild(stormBearingImg);
+
+        cardinalDirection.id = 'storm-bearing-cardinal-direction';
+        document.getElementById('current-storm-bearing').appendChild(cardinalDirection);
+
+        document.getElementById('current-storm-distance').textContent = `${stormDistance} miles away`;
+
+        switch(true){
+            case (stormBearing >= 348.75 || stormBearing < 11.25):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'N';
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- N" );
+                break;
+
+            case(stormBearing >= 11.25 && stormBearing < 33.75):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'NNE';
+                document.getElementById("storm-bearing-img").className = "northNorthEast";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- NNE" );
+                break;
+
+            case(stormBearing >= 33.75 && stormBearing < 56.25):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'NE';
+                document.getElementById("storm-bearing-img").className = "northEast";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- NE" );
+                break;
+            
+            case(stormBearing >= 52.25 && stormBearing < 78.25):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'ENE';
+                document.getElementById("storm-bearing-img").className = "eastNorthEast";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- ENE" );
+                break;
+            
+            case(stormBearing >= 78.25 && stormBearing < 101.25):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'E';
+                document.getElementById("storm-bearing-img").className = "east";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- E" );
+                break;
+            
+            case(stormBearing >= 101.25 && stormBearing < 123.75):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'ESE';
+                document.getElementById("storm-bearing-img").className = "eastSouthEast";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- ESE" );
+                break;
+            
+            case(stormBearing >= 123.75 && stormBearing < 146.25):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'SE';
+                document.getElementById("storm-bearing-img").className = "southEast";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- SE" );
+                break;
+            
+            case(stormBearing >=146.25 && stormBearing < 168.75):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'SSE';
+                document.getElementById("storm-bearing-img").className = "southSouthEast";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- SSE" );
+                break;
+            
+            case(stormBearing >= 168.75 && stormBearing < 191.25):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'S';
+                document.getElementById("storm-bearing-img").className = "south";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- S" );
+                break;
+            
+            case(stormBearing >= 191.25 && stormBearing < 213.75):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'SSW';
+                document.getElementById("storm-bearing-img").className = "southSouthWest";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- SSW" );
+                break;
+            
+            case(stormBearing >= 213.75 && stormBearing < 236.25):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'SW';
+                document.getElementById("storm-bearing-img").className = "southWest";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- SW" );
+                break;
+
+            case(stormBearing >= 236.25 && stormBearing < 258.75):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'WSW';
+                document.getElementById("storm-bearing-img").className = "westSouthWest";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- WSW" );
+                break;
+            
+            case(stormBearing >= 258.75 && stormBearing < 281.25):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'W';
+                document.getElementById("storm-bearing-img").className = "west";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- W" );
+                break;
+            
+            case(stormBearing >= 281.25 && stormBearing < 303.75):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'WNW';
+                document.getElementById("storm-bearing-img").className = "westNorthWest";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- WNW" );
+                break;
+            
+            case(stormBearing >= 303.75 && stormBearing < 326.25):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'NW';
+                document.getElementById("storm-bearing-img").className = "northWest";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- NW" );
+                break;
+            
+            case(stormBearing >= 326.25 && stormBearing < 348.75):
+                document.getElementById('storm-bearing-cardinal-direction').textContent = 'NNW';
+                document.getElementById("storm-bearing-img").className = "northNorthWest";
+                console.log("Storm Cardinal Direction: " + stormBearing + "° -=- NNW" );
+                break;
+        }
+    }
+    
+
+}
+
 let getCurrentWeatherIcons =  (icon) => { 
     const iconType = icon;
 
@@ -380,11 +504,13 @@ let getCurrentWeatherIcons =  (icon) => {
 
 //Event Listener for when user clicks check weather button.
 document.getElementById('geoBtn').addEventListener('click', geoFindMe);
-/** 
+
+/** NOTES: 
  * need to use forEach or Map to cycle and format the daily & hourly data sets
- *  
  * 
+ *  change getWeatherIcons into its own tool so that it can be used for other icons as well such as daily, hourly etc.  Need to add elementID, width, height  parameters to make more - maybe a function to just handle smaller icons.. gonna need class instead of ID because there will be multiple images for hourly/daily components.
  * 
+ * save last known long/lat to the localstorage, fetch data, display data. if geolocation data clicked, update the page and localstorage coords. if no local storage, then display page to get location data. 
  * 
  * 
  * 
