@@ -58,7 +58,10 @@ let fetchWeatherData = async url => {
     getCurrentMoistureConditions(weatherData.currently.dewPoint, weatherData.currently.humidity);
     getCurrentWeatherIcons(weatherData.currently.icon);
     getCurrentUVIndex(weatherData.currently.uvIndex);
-
+    getCurrentOzoneIndex(weatherData.currently.ozone);
+    getCurrentVisibility(weatherData.currently.cloudCover, weatherData.currently.visibility);
+    getCurrentWindConditions(weatherData.currently.windBearing, weatherData.currently.windSpeed, weatherData.currently.windGust);//weatherData.currently.windBearing
+    getCurrentPrecipitation(weatherData.currently.precipProbability, weatherData.currently.preciptType, weatherData.currently.precipIntensity);
 }
 
 //Function to push recieved latitude & longitude coordinates from API call to placeholder array.
@@ -77,7 +80,14 @@ let getCurrentTemperatures = (temperature, feelsLikeTemp) => {
 
 let getCurrentTimeStamp = (time) => {
     const unixtimestamp = time;
-    const currentTime = new Date(unixtimestamp * 1000);
+    const options =  {
+        hour12: "true",
+        weekday: "long",
+        year: "numeric", 
+        month: "long",
+        day: "numeric"
+    }
+    const currentTime = new Date(unixtimestamp * 1000).toLocaleTimeString(undefined, options);
     document.getElementById("retrieved-time").textContent = `retrieved: ${currentTime}`;
 }
 
@@ -88,37 +98,200 @@ let getCurrentMoistureConditions = (dewPoint, humidity) => {
     document.getElementById("current-dewpoint").textContent= `Dew Pt: ${currentDewPt}%`;
 }
 
-let getCurrentUVIndex = (uv) => {
+let getCurrentUVIndex = (uvLvl) => {
     let uvIndex = document.getElementById("current-uvIndex");
 
-    uvIndex.textContent = uv;
+    uvIndex.textContent = `UV Index: ${uvLvl} nm`;
 
     switch(true){
-        case (uv < 3):
+        case (uvLvl < 3):
             uvIndex.style.backgroundColor = "green";
-            console.log('uv index: ' + uv);
+            console.log('UV Index: ' + uvLvl);
             break
 
-        case ((uv >= 3) && (uv <= 5)):
+        case ((uvLvl >= 3) && (uvLvl <= 5)):
             uvIndex.style.backgroundColor = "yellow";
-            console.log('uv index: ' + uv);
+            console.log('UV Index: ' + uvLvl);
             break;
         
-        case ((uv > 5) && (uv <= 7)):
+        case ((uvLvl > 5) && (uvLvl <= 7)):
             uvIndex.style.backgroundColor = "orange";
-            console.log('uv index: ' + uv);
+            console.log('UV Index: ' + uvLvl);
             break;
         
-        case ((uv > 7) && (uv <= 10)):
+        case ((uvLvl > 7) && (uvLvl <= 10)):
             uvIndex.style.backgroundColor = "red";
-            console.log('uv index: ' + uv);
+            console.log('UV Index: ' + uvLvl);
             break;
         
-        case (uv >= 11):
+        case (uvLvl >= 11):
+            uvIndex.style.color = "white";
             uvIndex.style.backgroundColor = "purple";
-            console.log('uv index: ' + uv);
+            console.log('UV Index: ' + uvLvl);
             break;
     }
+}
+
+let getCurrentOzoneIndex = (ozLvl) =>{
+    let ozoneIndex = document.getElementById("current-ozone-index");
+
+    ozoneIndex.textContent = `Ozone Level: ${ozLvl} DU`;
+    
+    switch(true){
+        case (ozLvl <= 50):
+            ozoneIndex.style.backgroundColor = "green";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+
+        case ((ozLvl > 50) && (ozLvl <= 100)):
+            ozoneIndex.style.backgroundColor = "yellow";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+
+        case ((ozLvl > 100) && (ozLvl <= 150)):
+            ozoneIndex.style.backgroundColor = "orange";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+        
+        case ((ozLvl > 150) && (ozLvl <= 200)):
+            ozoneIndex.style.color = "white";
+            ozoneIndex.style.backgroundColor = "red";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+
+        case ((ozLvl > 200) && (ozLvl <= 300)):
+            ozoneIndex.style.color = "white";
+            ozoneIndex.style.backgroundColor = "#99004B";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+    
+        case ((ozLvl > 300) && (ozLvl <= 500)):
+            ozoneIndex.style.color = "white";
+            ozoneIndex.style.backgroundColor = "maroon";
+            console.log("Ozone Level: " + ozLvl);
+            break;
+    }
+}
+
+let getCurrentVisibility = (cloudCover, visibility) => {
+    const currentVisability = Math.round(visibility);
+    const currentCloudCover = Math.round(cloudCover * 100);
+    document.getElementById('current-visibility').textContent = `Visibility: ${currentVisability} miles`;
+    document.getElementById('current-cloud-cover').textContent = `Cloud Cover: ${currentCloudCover}%`;
+
+    console.log("Curent Cloud Cover & Visibility: ", `${currentCloudCover}%`, `${currentVisability}miles`);
+}
+
+let getCurrentWindConditions = (bearing, speed, gusts) =>{
+    let windBearing = bearing;
+    let windSpeed =  Math.round(speed);
+    let windGusts = Math.round(gusts);
+    let windBearingDiv = document.getElementById("current-wind-bearing");
+    let windBearingImg = document.createElement('img');
+    windBearingImg.src = "./imgs/wind-direction.png";
+    windBearingImg.id = "wind-bearing-img";
+    windBearingDiv.appendChild(windBearingImg);
+
+    console.log(windBearing, windSpeed, windGusts);
+
+    document.getElementById("current-wind-speed").textContent = `Wind Speed: ${windSpeed}mph`;
+    document.getElementById("current-wind-gust").textContent = `Wind Gusts: ${windGusts}mph`;
+
+    switch(true){
+        case (windBearing >= 348.75 || windBearing < 11.25):
+            console.log(windBearing + "° -=- N" );
+            break;
+
+        case(windBearing >= 11.25 && windBearing < 33.75):
+            document.getElementById("wind-bearing-img").className = "northNorthEast";
+            console.log(windBearing + "° -=- NNE" );
+            break;
+
+        case(windBearing >= 33.75 && windBearing < 56.25):
+            document.getElementById("wind-bearing-img").className = "northEast";
+            console.log(windBearing + "° -=- NE" );
+            break;
+        
+        case(windBearing >= 52.25 && windBearing < 78.25):
+            document.getElementById("wind-bearing-img").className = "eastNorthEast";
+            console.log(windBearing + "° -=- ENE" );
+            break;
+        
+        case(windBearing >= 78.25 && windBearing < 101.25):
+            document.getElementById("wind-bearing-img").className = "east";
+            console.log(windBearing + "° -=- E" );
+            break;
+        
+        case(windBearing >= 101.25 && windBearing < 123.75):
+            document.getElementById("wind-bearing-img").className = "eastSouthEast";
+            console.log(windBearing + "° -=- ESE" );
+            break;
+        
+        case(windBearing >= 123.75 && windBearing < 146.25):
+            document.getElementById("wind-bearing-img").className = "southEast";
+            console.log(windBearing + "° -=- SE" );
+            break;
+        
+        case(windBearing >=146.25 && windBearing < 168.75):
+            document.getElementById("wind-bearing-img").className = "southSouthEast";
+            console.log(windBearing + "° -=- SSE" );
+            break;
+        
+        case(windBearing >= 168.75 && windBearing < 191.25):
+            document.getElementById("wind-bearing-img").className = "south";
+            console.log(windBearing + "° -=- S" );
+            break;
+        
+        case(windBearing >= 191.25 && windBearing < 213.75):
+            document.getElementById("wind-bearing-img").className = "southSouthWest";
+            console.log(windBearing + "° -=- SSW" );
+            break;
+        
+        case(windBearing >= 213.75 && windBearing < 236.25):
+            document.getElementById("wind-bearing-img").className = "southWest";
+            console.log(windBearing + "° -=- SW" );
+            break;
+
+        case(windBearing >= 236.25 && windBearing < 258.75):
+            document.getElementById("wind-bearing-img").className = "westSouthWest";
+            console.log(windBearing + "° -=- WSW" );
+            break;
+        
+        case(windBearing >= 258.75 && windBearing < 281.25):
+            document.getElementById("wind-bearing-img").className = "west";
+            console.log(windBearing + "° -=- W" );
+            break;
+        
+        case(windBearing >= 281.25 && windBearing < 303.75):
+            document.getElementById("wind-bearing-img").className = "westNorthWest";
+            console.log(windBearing + "° -=- WNW" );
+            break;
+        
+        case(windBearing >= 303.75 && windBearing < 326.25):
+            document.getElementById("wind-bearing-img").className = "northWest";
+            console.log(windBearing + "° -=- NW" );
+            break;
+        
+        case(windBearing >= 326.25 && windBearing < 348.75):
+            document.getElementById("wind-bearing-img").className = "northNorthWest";
+            console.log(windBearing + "° -=- NNW" );
+            break;
+    }
+}
+
+let getCurrentPrecipitation = (probability, precipType=null, precipIntensity) => {
+    let precipProbability = probability * 100;
+
+    if(precipType !== null){
+        document.getElementById("current-precip-type").textContent = `Precipitation Type: ${precipType}`;
+        console.log(precipType);
+    }else{
+        document.getElementById("current-precip-type").className = "hidden";
+    }
+
+    document.getElementById("current-precip-probability").textContent = `Current Precipitation Probability: ${precipProbability}%`;
+    document.getElementById("current-precip-intensity").textContent = `Current Precipitation Intensity: ${precipIntensity}in/hr`;
+
 }
 
 let getCurrentWeatherIcons =  (icon) => { 
@@ -207,3 +380,12 @@ let getCurrentWeatherIcons =  (icon) => {
 
 //Event Listener for when user clicks check weather button.
 document.getElementById('geoBtn').addEventListener('click', geoFindMe);
+/** 
+ * need to use forEach or Map to cycle and format the daily & hourly data sets
+ *  
+ * 
+ * 
+ * 
+ * 
+ * 
+ * **/
