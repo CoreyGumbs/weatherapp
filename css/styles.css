@@ -27,10 +27,20 @@
     visibility: visible;
 }
 
+.hidden{
+    visibility: hidden;
+}
 
 #wind-bearing-img{
     width: 50px;
     height: 50px;
+}
+
+/* Wind Bearing Arrow Cardinal Direction rotations */
+/* True North starts at 0 degrees. Add 22.5 degrees for each Cardinal Direction */
+#wind-bearing-img{
+    width: 20px;
+    height: 20px;
 }
 
 .northNorthEast{

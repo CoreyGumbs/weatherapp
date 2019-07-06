@@ -281,11 +281,15 @@ let getCurrentWindConditions = (bearing, speed, gusts) =>{
 
 let getCurrentPrecipitation = (probability, precipType=null) => {
     let precipProbability = probability * 100;
-    document.getElementById("current-precip-probability").textContent = `Current Precipitation Probability: ${precipProbability}%`;
 
     if(precipType !== null){
-        console.log("precipType " + precipType);
+        document.getElementById("current-precip-type").textContent = `Precipitation Type: ${precipType}`;
+    }else{
+        document.getElementById("current-precip-type").className = "hidden";
     }
+
+    document.getElementById("current-precip-probability").textContent = `Current Precipitation Probability: ${precipProbability}%`;
+
 }
 
 let getCurrentWeatherIcons =  (icon) => { 
