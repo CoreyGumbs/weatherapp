@@ -61,7 +61,7 @@ let fetchWeatherData = async url => {
     getCurrentOzoneIndex(weatherData.currently.ozone);
     getCurrentVisibility(weatherData.currently.cloudCover, weatherData.currently.visibility);
     getCurrentWindConditions(weatherData.currently.windBearing, weatherData.currently.windSpeed, weatherData.currently.windGust);//weatherData.currently.windBearing
-
+    getCurrentPrecipitation(weatherData.currently.precipProbability, weatherData.currently.preciptType);
 }
 
 //Function to push recieved latitude & longitude coordinates from API call to placeholder array.
@@ -192,9 +192,6 @@ let getCurrentWindConditions = (bearing, speed, gusts) =>{
     windBearingImg.id = "wind-bearing-img";
     windBearingDiv.appendChild(windBearingImg);
 
-
-    
-
     console.log(windBearing, windSpeed, windGusts);
 
     document.getElementById("current-wind-speed").textContent = `Wind Speed: ${windSpeed}mph`;
@@ -279,6 +276,15 @@ let getCurrentWindConditions = (bearing, speed, gusts) =>{
             document.getElementById("wind-bearing-img").className = "northNorthWest";
             console.log(windBearing + "° -=- NNW" );
             break;
+    }
+}
+
+let getCurrentPrecipitation = (probability, precipType=null) => {
+    let precipProbability = probability * 100;
+    document.getElementById("current-precip-probability").textContent = `Current Precipitation Probability: ${precipProbability}%`;
+
+    if(precipType !== null){
+        console.log("precipType " + precipType);
     }
 }
 
