@@ -61,7 +61,7 @@ let fetchWeatherData = async url => {
     getCurrentOzoneIndex(weatherData.currently.ozone);
     getCurrentVisibility(weatherData.currently.cloudCover, weatherData.currently.visibility);
     getCurrentWindConditions(weatherData.currently.windBearing, weatherData.currently.windSpeed, weatherData.currently.windGust);//weatherData.currently.windBearing
-    getCurrentPrecipitation(weatherData.currently.precipProbability, weatherData.currently.preciptType);
+    getCurrentPrecipitation(weatherData.currently.precipProbability, weatherData.currently.preciptType, weatherData.currently.precipIntensity);
 }
 
 //Function to push recieved latitude & longitude coordinates from API call to placeholder array.
@@ -279,16 +279,18 @@ let getCurrentWindConditions = (bearing, speed, gusts) =>{
     }
 }
 
-let getCurrentPrecipitation = (probability, precipType=null) => {
+let getCurrentPrecipitation = (probability, precipType=null, precipIntensity) => {
     let precipProbability = probability * 100;
 
     if(precipType !== null){
         document.getElementById("current-precip-type").textContent = `Precipitation Type: ${precipType}`;
+        console.log(precipType);
     }else{
         document.getElementById("current-precip-type").className = "hidden";
     }
 
     document.getElementById("current-precip-probability").textContent = `Current Precipitation Probability: ${precipProbability}%`;
+    document.getElementById("current-precip-intensity").textContent = `Current Precipitation Intensity: ${precipIntensity}in/hr`;
 
 }
 
@@ -378,3 +380,12 @@ let getCurrentWeatherIcons =  (icon) => {
 
 //Event Listener for when user clicks check weather button.
 document.getElementById('geoBtn').addEventListener('click', geoFindMe);
+/** 
+ * need to use forEach or Map to cycle and format the daily & hourly data sets
+ *  
+ * 
+ * 
+ * 
+ * 
+ * 
+ * **/
