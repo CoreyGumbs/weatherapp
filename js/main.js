@@ -15,9 +15,9 @@ let geoFindMe = () => {
     //success callback for navigator.geolocation.getCurrentPosition() parameter.
     let geoSuccess = position => {
 
-        //getWeatherData() takes the api proxy url and adds, the latitude, longitude coordinates from retrieved geolocation position.
+        //init() takes the api proxy url and adds, the latitude, longitude coordinates from retrieved geolocation position.
         //these coordinates are needed to access the Dark Sky endpoint weather api. 
-        fetchWeatherData(`https://coreygumbs-eval-test.apigee.net/localweather/${position.coords.latitude},${position.coords.longitude}?units=auto`)
+        init(`https://coreygumbs-eval-test.apigee.net/localweather/${position.coords.latitude},${position.coords.longitude}?exclude=[minutely, daily],units=auto`)
         .catch(error =>{
             errorMsg(error);
         });
@@ -34,14 +34,14 @@ let geoFindMe = () => {
 
 //takes url from the success callback in geoFindMe()
 //uses async/await for data retrieval from Dark Sky API.
-let fetchWeatherData = async url => {
+let init = async url => {
     //fetches url from Dark Sky API endpoint
-    const response = await fetch(url)
+    const res = await fetch(url)
     .catch(error =>{
         errorMsg(error);
     });
     //converts response body to json.
-    const weatherData = await response.json()
+    const weatherData = await res.json()
     .catch(error =>{
         errorMsg(error);
     });
@@ -66,9 +66,10 @@ let fetchWeatherData = async url => {
     getCurrentStormBearing(weatherData.currently.nearestStormBearing, weatherData.currently.nearestStormDistance);
 
     //Data from "Hourly" data point of DarkSky response object.
-
+    return weatherData;
 }
 
+console.log(init());
 //Function to push recieved latitude & longitude coordinates from API call to placeholder array.
 //uses async/await to prevent calling before data is recieved from API response object.
 let getGeoCoords = async (lat, long) => {
@@ -506,12 +507,14 @@ let getCurrentWeatherIcons =  (icon) => {
 document.getElementById('geoBtn').addEventListener('click', geoFindMe);
 
 /** NOTES: 
+ * Def gonna have to refactor a lot of code. 
+ * 
  * need to use forEach or Map to cycle and format the daily & hourly data sets
  * 
  *  change getWeatherIcons into its own tool so that it can be used for other icons as well such as daily, hourly etc.  Need to add elementID, width, height  parameters to make more - maybe a function to just handle smaller icons.. gonna need class instead of ID because there will be multiple images for hourly/daily components.
  * 
  * save last known long/lat to the localstorage, fetch data, display data. if geolocation data clicked, update the page and localstorage coords. if no local storage, then display page to get location data. 
  * 
- * 
+ * can turn directional switch statement into its own function.. and cut down on repetitive code. 
  * 
  * **/
