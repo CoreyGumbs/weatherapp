@@ -1,24 +1,54 @@
 class LocationStorage{
     constructor(){
-        this.default_lat = 40.6413111, 
-        this.default_long = -73.7781391,
+
         this.timeStamp = new Date().getTime()
+        this.defaultLocation =  {
+            'city': 'Central Park, New York, New York', 
+            'lat': 40.7829, 
+            'long': 73.9654, 
+            'timestamp': this.timeStamp
+        }
     }
 
-    save = (lat, long, currentCity)=>{
+    setLocation = (lat, long, currentCity)=>{
+
         let savedLocations = JSON.parse(localStorage.getItem('savedLocations'));
         let locations = [];
 
         if(!savedLocations){
-            locations.push({'city': currentCity, 'lat': lat, 'long': long, 'timestamp': this.timeStamp});
+            locations.push(this.defaultLocation);
             localStorage.setItem('savedLocations', JSON.stringify(locations));
             
         }else{
-        
-            locations.push({'city': currentCity, 'lat': lat, 'long': long, 'timestamp': this.timeStamp}, ...savedLocations)
-            localStorage.setItem('savedLocations', JSON.stringify(locations));
-            console.log(savedLocations);
+            
+            if(savedLocations.length < 3){
+                locations.push({'city': currentCity, 'lat': lat, 'long': long, 'timestamp': this.timeStamp}, ...savedLocations)
+                localStorage.setItem('savedLocations', JSON.stringify(locations));
+            }else{
+                savedLocations.pop();
+                locations.push({'city': currentCity, 'lat': lat, 'long': long, 'timestamp': this.timeStamp}, ...savedLocations)
+                localStorage.setItem('savedLocations', JSON.stringify(locations));
+            }
         }
-       
-    } 
+    }
+
+    setCoordinates = (lat, long) =>{ 
+        let currentCoords = {"lat" : lat, "long" : long}
+        localStorage.setItem("currentCoordinates", JSON.stringify(currentCoords));
+    }
+
+    getItem = (key) => {
+        let retrievedData = JSON.parse(localStorage.getItem(key));
+
+        return retrievedData
+    }
+
+    removeItem = key => {
+        localStorage.removeItem(key);
+    }
+
+    clearStorageHandler = () => {
+        localStorage.clear();
+        console.log('worked');
+    }
 }
