@@ -1,4 +1,4 @@
-class LocStore{
+class PositionStorage{
     constructor(){
 
         this.timeStamp = new Date().getTime(),
@@ -18,7 +18,7 @@ class LocStore{
 
         if(!savedLocations){
             localStorage.setItem('savedLocations', JSON.stringify(this.defaultLocation));
-            this.setCoordinates(this.defaultLocation.lat, this.defaultLocation.long);
+            this.setItem('currentCoords', {lat: this.defaultLocation.lat, long: this.defaultLocation.long});
         }
     }
 
@@ -36,11 +36,6 @@ class LocStore{
             localStorage.setItem('savedLocations', JSON.stringify(savedLocations));
         }
         
-    }
-
-    setCoordinates = (lat, long) =>{ 
-        let currentCoords = {"lat" : lat, "long" : long}
-        localStorage.setItem("currentCoords", JSON.stringify(currentCoords));
     }
 
     getItem = (key) => {
