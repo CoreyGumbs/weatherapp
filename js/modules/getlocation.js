@@ -1,27 +1,26 @@
-<<<<<<< HEAD
-import PositionStorage  from './positionstorage.js/index.js';
-=======
-import LocStorage  from './locstore.js';
->>>>>>> 0f7fa55713406954a8a5d4633bac197d8e791b7e
+
+import PositionStorage  from './positionstorage.js';
 import errorMsg from './error.js';
 
 class Location {
     constructor(){
         this.storage = new PositionStorage();
+        this.storedCities = this.storage.getItem('savedLocations');
+        this.storedCurrentCoords = this.storage.getItem('currentCoords'),
         this.init = () => {
+            //adds default data to localStorage if not present.
             this.storage.init();
-            this.reversePositionLookup();
         },
-        this.currentLatitude = '',
-        this.currentLongitude = ''
+        this.weatherData = ''
     }
 
     goFindMe = () => {
 
         let geoSuccess = position =>{
-            this.currentLatitude = position.coords.latitude;
-            this.currentLongitude = position.coords.longitude;
-            console.log(`Geolocation Success!! Current coordinates are: Lat: ${this.currentLatitude}, Long ${this.currentLongitude}`);
+            this.storage.setItem('currentCoords', {latitude: position.coords.latitude, longitude: position.coords.longitude});
+            this.storedCurrentCoords = {latitude: position.coords.latitude, longitude: position.coords.longitude};
+            console.log('Stored Current Coords: ' + this.storedCurrentCoords.latitude);
+            console.log(`Geolocation Success!! Current coordinates are: Lat: ${this.storedCurrentCoords.latitude}, Long: ${this.storedCurrentCoords.longitude}`);
             return position.coords; 
         }
 
@@ -37,10 +36,9 @@ class Location {
        }
     }
 
-    reversePositionLookup = () => {
-        console.log(this.storage.defaultLocation);
-    }
-
+   currentRevLookup = (lat, long) => {
+       console.log(lat, long);
+   }
     
 }
 

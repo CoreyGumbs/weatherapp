@@ -18,7 +18,7 @@ class PositionStorage{
 
         if(!savedLocations){
             localStorage.setItem('savedLocations', JSON.stringify(this.defaultLocation));
-            this.setItem('currentCoords', {lat: this.defaultLocation.lat, long: this.defaultLocation.long});
+            this.setItem('currentCoords', {latitude: this.defaultLocation.lat, longitude: this.defaultLocation.long});
         }
     }
 
@@ -58,4 +58,4 @@ class PositionStorage{
     }
 }
 
-export default LocStore;
+export default PositionStorage;
