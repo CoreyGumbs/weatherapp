@@ -1,9 +1,13 @@
+<<<<<<< HEAD
+import PositionStorage  from './positionstorage.js/index.js';
+=======
 import LocStorage  from './locstore.js';
+>>>>>>> 0f7fa55713406954a8a5d4633bac197d8e791b7e
 import errorMsg from './error.js';
 
 class Location {
     constructor(){
-        this.storage = new LocStorage();
+        this.storage = new PositionStorage();
         this.init = () => {
             this.storage.init();
             this.reversePositionLookup();

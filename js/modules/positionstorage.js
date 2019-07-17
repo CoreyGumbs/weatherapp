@@ -1,4 +1,4 @@
-class LocStore{
+class PositionStorage{
     constructor(){
 
         this.timeStamp = new Date().getTime(),
