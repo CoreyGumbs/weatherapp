@@ -5,34 +5,31 @@ class Location {
         this.storage = new LocStorage();
         this.init = () => {
             this.storage.init();
+            this.goFindMe();
         }
 
     }
 
-    //get current location and save to local storage.
-    geoFindMe = () => {
-        let success = position => {
-            let coords = position.coords;
-            this.storeage.setCoordinates(coords.lat, coords.long);   
-            console.log(coords);
-        }
+    goFindMe = () => {
 
         let errorMsg = (error) => {
             console.log('Error Code: ' + error.code);
             console.log('Error Msg: ' + error.message);
-            document.querySelector('body').innerHTML = `${error.message}`;
             console.error(error);
         }
 
-        if(navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(success, errorMsg);
-        }else{
-            document.querySelector('body').innerHTML= "Geolocation is not supported.";
+        let geoSuccess = position =>{
+            this.storage.setCoordinates(position.coords.latitude, position.coords.longitude);
+            console.log(this.storage.getItem('currentCoords'));
+            return position.coords; 
         }
 
+       if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(geoSuccess, errorMsg);
+       }else{
+           document.querySelector('body').innerHTML = 'browser doesn\'t support geolocation';
+       }
     }
-
 }
-
 
 export default Location;
