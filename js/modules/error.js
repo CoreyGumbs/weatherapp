@@ -3,3 +3,5 @@ let errorMsg = (error) => {
     console.log('Error Msg: ' + error.message);
     console.error(error);
 }
+
+export default errorMsg;
