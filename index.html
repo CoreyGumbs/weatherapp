@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/skycons.js">
-    </script>
-    <title>Document</title>
+    <link rel="stylesheet" href="css/styles.css" rel=preload>
+    <script src="js/skycons.js"></script>
+    <script src="js/main.js" type="module"></script>
+    <title>Weather App</title>
 </head>
 <body>
-<main>
+
+    <button id="currnetLocBtn"></button>
+<!-- <main>
     <header>
         <nav>
             
@@ -19,9 +21,6 @@
     <div class="container">
         <button id="geoBtn">Check Current Weather!  </button>
     </div>
-    <!-- <div class="loader">
-        
-    </div> -->
     <div id="current-weather">
         <div id="current-temp">
             <div id="current-temp-icon-container">
@@ -29,6 +28,7 @@
            <h1> <span id="current-temp-header"></span></h1>
         </div>  
         <div id="feels-like-temp"></div>
+        <div id="current-weather-summary"></div>
         <div id="current-moisture-conditions">
             <p id="current-humidity"></p>
             <p id="current-dewpoint"></p>
@@ -53,11 +53,14 @@
             <div id="current-precip-type"></div>
             <div id="current-nearest-storm"></div>
         </div>
+        <div id="current-storm-direction">
+            <div id="current-storm-bearing"></div>
+            <div id="current-storm-distance"></div>
+        </div>
         <div id="currentTimeStamp">
             <p id="retrieved-time"></p>   
         </div>
     </div>
-</main>
-    <script src="js/main.js"></script>
+</main> -->
 </body>
 </html>
