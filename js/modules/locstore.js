@@ -5,7 +5,7 @@ class LocStore{
         this.defaultLocation =  {
             'city': 'Central Park, New York, New York', 
             'lat': 40.7829, 
-            'long': 73.9654, 
+            'long': -73.9654, 
             'timestamp': this.timeStamp
         },
         this.init = () => {
